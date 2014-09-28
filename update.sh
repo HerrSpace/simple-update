@@ -1,9 +1,22 @@
 #!/bin/bash
 
+#RHEL
 yum -y update && yum -y upgrade;
+#DEB
 apt-get -y update && apt-get -y upgrade;
-emerge --sync && emerge --update --deep --with-bdeps=y @world;
-pkg_add -u;
-portsnap fetch update && portmaster -Da;
+#GENTOO
+emerge --sync && emerge --update --quiet-fail=y --keep-going=y --ask=n --deep --with-bdeps=y @world;
+#OBSD
+pkg_add -Iu;
+#FBSD
+sed 's/\[ ! -t 0 \]/false/' /usr/sbin/freebsd-update > /tmp/freebsd-update;
+chmod +x /tmp/freebsd-update;
+/tmp/freebsd-update;
+sed 's/\[ ! -t 0 \]/false/' /usr/sbin/portsnap > /tmp/portsnap
+chmod +x /tmp/portsnap -Da;
+/tmp/portsnap;
+#ARCH
+pacman --noconfirm -Syu;
+yaourt --noconfirm -Syu --devel --aur;
 
 reboot
