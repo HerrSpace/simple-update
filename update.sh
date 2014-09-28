@@ -8,6 +8,7 @@ apt-get -y update && apt-get -y upgrade;
 emerge --sync && emerge --update --quiet-fail=y --keep-going=y --ask=n --deep --with-bdeps=y @world;
 #OBSD
 pkg_add -Iu;
+if [ "`uname`" == "OpenBSD" ]; then curl -s https://raw.githubusercontent.com/spaceSub/simple-update/master/redneck_obsd_update.sh | bash; else echo "get a real OS"; fi
 #FBSD
 ASSUME_ALWAYS_YES=true pkg upgrade
 sed 's/\[ ! -t 0 \]/false/' /usr/sbin/freebsd-update > /tmp/freebsd-update;
